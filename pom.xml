@@ -54,5 +54,5 @@
         </plugin>
     </plugins>
 </build>
-    <name>ALTOToOCRElastic</name>
+    <name>ALTOToElastic</name>
 </project>
