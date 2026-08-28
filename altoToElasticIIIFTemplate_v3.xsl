@@ -3,21 +3,21 @@
     <xsl:output method="text"/>
     <!-- ALTO v3 -> Elasticsearch/IIIF annotation JSON -->
     <!-- This needs to resolve to the annotation list: -->
-    <xsl:param name="annoURI" select="'http://localhost/IIIFAltoConvertor/canvas-FL87981082.json'"/>
+    <xsl:param name="annoURI" select="'http://localhost/IIIFAltoConvertor/canvas-FLPID.json'"/>
     <!--
         The ALTO may have been generated from the TIFF, if so the jp2 or IIIF image might be a different size. If so
         use the following ratios to reduce the TIFF coordinators to the IIIF image coordinates:
 -->    
-    <xsl:param name="xRatio" select="'1.0'"/>
-    <xsl:param name="yRatio" select="'1.0'"/>
+    <xsl:param name="xRatio" select="'XRAT'"/>
+    <xsl:param name="yRatio" select="'YRAT'"/>
     <!-- Links to the canvas for the annotation and the manifest for the within -->
-    <xsl:param name="canvasURI" select="'https://lib.is/IE87980900/canvas/canvas-FL87981082.json'" />
-    <xsl:param name="modificationdate" select="'2026-08-19T14:49:10Z'" />
+    <xsl:param name="canvasURI" select="'https://lib.is/IEPID/canvas/canvas-FLPID.json'" />
+    <xsl:param name="modificationdate" select="'MODIFICATIONDATE'" />
     <!--
         Include this if you want to have a within link in the annotation. For example:
         <xsl:param name="manifestURI" select="'http://dams.llgc.org.uk/iiif/3100186/manifest.json'"/>
     -->
-    <xsl:param name="manifestURI" select="'https://lib.is/IE87980900/manifest'"/>
+    <xsl:param name="manifestURI" select="'https://lib.is/IEPID/manifest'"/>
     <xsl:variable name="quote">'</xsl:variable>
     <xsl:variable name="doubleqoute">"</xsl:variable>
     <xsl:template match="/">

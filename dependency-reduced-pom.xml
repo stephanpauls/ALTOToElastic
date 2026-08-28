@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.elastic</groupId>
   <artifactId>ALTOToElastic</artifactId>
-  <name>ALTOToOCRElastic</name>
+  <name>ALTOToElastic</name>
   <version>1</version>
   <build>
     <plugins>

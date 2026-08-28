@@ -15,11 +15,13 @@ public class AltoData {
     public String xmlPath;
     public Float width;
     public Float height;
+    public String modificationDate;
 
-    public AltoData(String FLPid, String imagePath, String xmlPath) {
+    public AltoData(String FLPid, String imagePath, String xmlPath, String modificationDate) {
         this.FLPid = FLPid;
         this.imagePath = imagePath;
         this.xmlPath = xmlPath;
+        this.modificationDate = modificationDate;
     }
 
     public void setWidth(Float width) {

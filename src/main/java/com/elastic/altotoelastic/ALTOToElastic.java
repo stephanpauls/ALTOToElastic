@@ -60,11 +60,9 @@ public class ALTOToElastic {
     static String manifestDir = "";
     static String altojson = "";
     static String altoxml="";
-    static String altoXslFileTemplate = "/nas/vol03/mirador/mirador/annotation/altoToElasticIIIFTemplate.xsl";
-    static String altoXslFile = "/nas/vol03/mirador/mirador/annotation/altoToElasticIIIF.xsl";
-    //test 
-//    static String altoXslFileTemplate = "./altoToElasticIIIFTemplate.xsl";
-//    static String altoXslFile = "./altoToElasticIIIF.xsl";
+    
+    static String altoXslFileTemplate = "";
+    static String altoXslFile = "";
     //
     private static final Logger logger = LogManager.getLogger(ALTOToElastic.class);
     static Document document;
@@ -109,6 +107,7 @@ public class ALTOToElastic {
                     oldContent = oldContent.replaceAll("XRAT", alto.width.toString());
                     oldContent = oldContent.replaceAll("YRAT", alto.height.toString());
                     oldContent = oldContent.replaceAll("FLPID", alto.FLPid.toString());
+                    oldContent = oldContent.replaceAll("MODIFICATIONDATE", alto.modificationDate);
                     newContent = oldContent.replaceAll("IEPID", IEPid);
                     
              
@@ -308,8 +307,10 @@ public class ALTOToElastic {
         try {
             
 
-            String username = "admin";
-            String password = "Nc7gmYGx";
+           String username = "admin";
+           String password = "Nc7gmYGx";
+//            String username = "elastic";
+//            String password = "changeme123";
 
             // Encode credentials
             String auth = username + ":" + password;
@@ -319,6 +320,7 @@ public class ALTOToElastic {
             
 
 URL url = new URL("https://elastic.libis.be/annotations/_bulk");
+//URL url = new URL("http://localhost:9200/annotations/_bulk");
 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 conn.setRequestMethod("POST");
@@ -475,6 +477,10 @@ public static void main(String[] args) {
     ArrayList<IEAltoData> iEalto = new ArrayList();
     ArrayList<AltoData> altoList = new ArrayList();
 
+    altoXslFileTemplate = prop.getProperty("altoXslFileTemplate");
+    altoXslFile = prop.getProperty("altoXslFile"); 
+    
+    
     String importNumber = prop.getProperty("importNumber");
     String importNumberDir=importNumber;
     

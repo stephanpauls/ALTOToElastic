@@ -551,7 +551,7 @@ public String getIEAccessRights(String iePid) {
 	  }
 	  return extension;
 	}          
-
+/*
 public ArrayList getAltoFiles(String iePid) {
 	  
         Statement stmt = null;
@@ -617,7 +617,7 @@ public ArrayList getAltoFiles(String iePid) {
 	  return alto;
 	}
 
-     
+     */
      public ArrayList<IEAltoData> getGoogleAltoPids(String entitytype,String startdatum,String einddatum) {
 	  
         Statement stmt = null;
@@ -632,7 +632,7 @@ public ArrayList getAltoFiles(String iePid) {
             String query =  "SELECT c.pid,r.FILEEXTENSION ,ccc.pid, r.FILEORIGINALNAME, "
 + "CASE WHEN s.storage_id IS null THEN (SELECT value FROM V2KU_ROS00.storage_parameter WHERE STORAGE_ID = r.storageid and key = 'DIR_ROOT') || r.INTERNALPATH "
 + "ELSE   (SELECT value FROM V2KU_ROS00.storage_parameter WHERE STORAGE_ID = s.storage_id and key = 'DIR_ROOT') || s.index_location "
-+ "END filepath "
++ "END filepath, TO_CHAR(c.MODIFICATIONDATE, 'YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"') "
 + "from hdecontrol  c "
 + "inner join hdecontrol cc on cc.parentid = c.pid  "
 + "inner join hdecontrol ccc on cc.pid = ccc.parentid "
@@ -644,8 +644,8 @@ public ArrayList getAltoFiles(String iePid) {
 + "AND c.pid != 'IE42308767' "
 + "AND mm.MDID = 32 "
 + "AND (r.FILEEXTENSION = 'jp2' OR (r.FILEEXTENSION ='xml' AND cc.preservationtype = 'DERIVATIVE_COPY')) "
-//+ "AND ((r.FILEEXTENSION ='jp2' AND ccc.PID = 'FL19466204') OR (r.FILEEXTENSION ='xml' AND ccc.pid = 'FL19466881' AND cc.preservationtype = 'DERIVATIVE_COPY')) "
-                    
+//test
+//+ "AND ((r.FILEEXTENSION ='jp2' AND ccc.PID = 'FL54206520') OR (r.FILEEXTENSION ='xml' AND ccc.pid = 'FL54207631' AND cc.preservationtype = 'DERIVATIVE_COPY')) "
 + "AND c.CREATEDATE >= to_date('"+ startdatum + "','/YYYY/MM/DD') "
 + "AND c.CREATEDATE < to_date('"+ einddatum + "','/YYYY/MM/DD') "
 + "order by c.pid,r.FILEORIGINALNAME";
@@ -672,20 +672,26 @@ rset = stmt.executeQuery(query);
                     altoData = new ArrayList();
                     iEAltoDatum = new IEAltoData(IEPidCurr, null);
                 }
-                if ("jp2".equals(rset.getString(2))) {
-                    altoDatum = new AltoData(rset.getString(3), rset.getString(5), null);
+/*                if (rset.getString(5).contains("FL87980902") || rset.getString(5).contains("FL87981009") || rset.getString(5).contains("FL87980910") || rset.getString(5).contains("FL87981011") 
+                        || rset.getString(5).contains("FL87981078") || rset.getString(5).contains("FL87981082"))                
+                {
+*/                if ("jp2".equals(rset.getString(2))) {
+                    if (!("Consolidated".contains(rset.getString(4)))) {
+                        altoDatum = new AltoData(rset.getString(3), rset.getString(5), null,rset.getString((6)));
+                    }
 //                    logger.info("FLPid = " +altoDatum.FLPid);
                 } else {
                     if (altoDatum != null) altoDatum.xmlPath = rset.getString(5);
 //voor lokale test verwijs naar C:\Users\StephanP\Documents\iiif\OCR\IE...
-/*                    String filePath = rset.getString(5).substring(rset.getString(5).lastIndexOf("/")+1);
-                    filePath = "C:\\Users\\StephanP\\Documents\\iiif\\OCR\\"+rset.getString(1)+"\\"+filePath;
-                    if (altoDatum != null) altoDatum.xmlPath = filePath;
-*/                    
+//                    String filePath = rset.getString(5).substring(rset.getString(5).lastIndexOf("/")+1);
+//                    filePath = "C:\\Users\\StephanP\\Documents\\iiif\\OCR\\"+rset.getString(1)+"\\"+filePath;
+//                    if (altoDatum != null) altoDatum.xmlPath = filePath;
+                  
 //                    System.out.println("xmlPath = " +altoDatum.xmlPath);
 //                    System.out.println("imagePath = " +altoDatum.imagePath);
                     altoData.add(altoDatum);
                 }
+  //              }
             }
             if (!first) {
                 iEAltoDatum.setAltoData(altoData);

@@ -11,6 +11,7 @@
     <xsl:param name="yRatio" select="'YRAT'"/>
     <!-- Links to the canvas for the annotation and the manifest for the within -->
     <xsl:param name="canvasURI" select="'https://lib.is/IEPID/canvas/canvas-FLPID.json'" />
+    <xsl:param name="modificationdate" select="'MODIFICATIONDATE'" />
     <!--
         Include this if you want to have a within link in the annotation. For example:
         <xsl:param name="manifestURI" select="'http://dams.llgc.org.uk/iiif/3100186/manifest.json'"/>
@@ -43,7 +44,7 @@
                             </xsl:with-param>
                             <xsl:with-param name="replace" select="$doubleqoute"/>
                                 <xsl:with-param name="with" select="concat('\', $doubleqoute)"/>
-                            </xsl:call-template>", "on":"<xsl:value-of select="$canvasURI"/>#xywh=<xsl:value-of select="floor((@HPOS*(@HPOS >=0) - @HPOS*(@HPOS &lt; 0)) div $xRatio)"/>,<xsl:value-of select="floor((@VPOS*(@VPOS >=0) - @VPOS*(@VPOS &lt; 0)) div $yRatio)"/>,<xsl:value-of select="floor((@WIDTH*(@WIDTH >=0) - @WIDTH*(@WIDTH &lt; 0)) div $xRatio)"/>,<xsl:value-of select="floor((@HEIGHT*(@HEIGHT >=0) - @HEIGHT*(@HEIGHT &lt; 0)) div $yRatio)"/>" }<xsl:text>&#10;</xsl:text>
+                            </xsl:call-template>", "on":"<xsl:value-of select="$canvasURI"/>#xywh=<xsl:value-of select="floor((@HPOS*(@HPOS >=0) - @HPOS*(@HPOS &lt; 0)) div $xRatio)"/>,<xsl:value-of select="floor((@VPOS*(@VPOS >=0) - @VPOS*(@VPOS &lt; 0)) div $yRatio)"/>,<xsl:value-of select="floor((@WIDTH*(@WIDTH >=0) - @WIDTH*(@WIDTH &lt; 0)) div $xRatio)"/>,<xsl:value-of select="floor((@HEIGHT*(@HEIGHT >=0) - @HEIGHT*(@HEIGHT &lt; 0)) div $yRatio)"/>","modificationdate": "<xsl:value-of select="$modificationdate"/>" }<xsl:text>&#10;</xsl:text>
 <xsl:if test="position() != last()"></xsl:if>
                 </xsl:for-each>
 		
